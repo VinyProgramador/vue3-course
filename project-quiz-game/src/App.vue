@@ -17,9 +17,18 @@ data() {
   return {
     question: '',
     incorrectAnswers: '',
-    correctAnswer: ''
+    correctAnswer: '', 
   };
 },
+
+computed:{
+  answers(){
+    var answers = JSON.parse(JSON.stringify(this.incorrectAnswers));
+    answers.splice(Math.round(Math.random() * answers.length), 0, this.correctAnswer);
+    return answers;
+  }
+},
+
 created() {
   this.axios
     .get('https://opentdb.com/api.php?amount=1&category=18&difficulty=easy')
