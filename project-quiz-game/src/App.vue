@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus reprehenderit obcaecati ut atque iste rem ullam dolores odit sed.</h1>
+    <h1 v-html="this.question"></h1>
     <input type="radio" name="options" value="true">
     <label>True</label><br>
     <input type="radio" name="options" value="false">
@@ -13,12 +13,36 @@
 
 export default {
   name: 'App',
-    created(){
-      this.axios.get('https://opentdb.com/api.php?amount=1&category=18&difficulty=easy')
-      .then((response)=>{
-          console.log(response)
-      })
-    }
+data() {
+  return {
+    question: '',
+    incorrectAnswers: '',
+    correctAnswer: ''
+  };
+},
+created() {
+  this.axios
+    .get('https://opentdb.com/api.php?amount=1&category=18&difficulty=easy')
+    .then((response) => {
+      if (response.data.results && response.data.results.length > 0) {
+        const result = response.data.results[0];
+        if (result.question && result.incorrect_answers && result.correct_answer) {
+          this.question = result.question;
+          this.incorrectAnswers = result.incorrect_answers;
+          this.correctAnswer = result.correct_answer;
+          console.log(response.data);
+        } else {
+          console.log('Invalid response format');
+        }
+      } else {
+        console.log('No results found');
+      }
+    })
+    .catch((error) => {
+      console.log('API request failed:', error);
+    });
+}
+
 
   //url para o serviço
   //https://opentdb.com/api.php?amount=1&category=18&difficulty=easy
