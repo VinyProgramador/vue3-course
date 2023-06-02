@@ -22,9 +22,6 @@
     <button v-if="!this.answerSubmitted" @click="this.submitAnswer()" class="send" type="button">Confirmar</button>
 
   </template>
-  
-
-  
   <section class="result" v-if="this.answerSubmitted">
     <template v-if="this.chosen_answer == this.correctAnswer">
       <h4>&#9989; Parabéns, a resposta "{{this.correctAnswer}}" está correta.</h4>
