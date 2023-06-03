@@ -1,17 +1,27 @@
 <template>
   <div id="nav">
-    <router-link to="/">Início</router-link> -
-    <router-link to="/basket">Carrinho (0)</router-link> 
+    <router-link to="/">Início</router-link>
+    <router-link to="/basket">Carrinho (0)</router-link>
+    <router-link to="/product">Produtos</router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
+import axios from "axios";
 
-  export default {
-
-  }
-  
+export default {
+  created() {
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+};
 </script>
 
 
@@ -37,10 +47,10 @@
   background-color: rgb(37, 37, 37);
   color: white;
 
-
   a {
     color: white;
     text-decoration: none;
+    margin: 10px;
 
     &.router-link-exact-active {
       color: #007bff;
